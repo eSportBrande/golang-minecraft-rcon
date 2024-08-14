@@ -28,7 +28,7 @@ jobs:
               run: GOOS=linux GOARCH=arm64 go build -o minecraft-rcon-linux-arm64-${{ env.RELEASE_VERSION }}
 
             - name: "Build Go for Windows x64"
-              run: GOOS=windows GOARCH=amd64 go build -o minecraft-rcon-linux-amd64-${{ env.RELEASE_VERSION }}.exe
+              run: GOOS=windows GOARCH=amd64 go build -o minecraft-rcon-windows-amd64-${{ env.RELEASE_VERSION }}.exe
 
             - name: "Create release"
               id: create_release
@@ -47,46 +47,46 @@ jobs:
               uses: actions/upload-artifact@v2
               with:
                 name: minecraft-rcon-linux-amd64-${{ env.RELEASE_VERSION }}
-                path: minecraft-rcon
+                path: minecraft-rcon-linux-amd64-${{ env.RELEASE_VERSION }}
 
             - name: "Upload arm64 Linux artifact"
               uses: actions/upload-artifact@v2
               with:
                 name: minecraft-rcon-linux-arm64-${{ env.RELEASE_VERSION }}
-                path: minecraft-rcon
+                path: minecraft-rcon-linux-arm64-${{ env.RELEASE_VERSION }}
 
             - name: "Upload Windows x64 artifact"
               uses: actions/upload-artifact@v2
               with:
-                    name: minecraft-rcon-linux-amd64-${{ env.RELEASE_VERSION }}.exe
-                    path: minecraft-rcon
+                    name: minecraft-rcon-windows-amd64-${{ env.RELEASE_VERSION }}.exe
+                    path: minecraft-rcon-windows-amd64-${{ env.RELEASE_VERSION }}
             
-            - name: "Upload release"
+            - name: "Upload release Linux-amd64"
               uses: actions/upload-release-asset@v1
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
                 upload_url: ${{ steps.create_release.outputs.upload_url }}
-                asset_path: minecraft-rcon
+                asset_path: minecraft-rcon-linux-amd64-${{ env.RELEASE_VERSION }}
                 asset_name: minecraft-rcon-linux-amd64-${{ env.RELEASE_VERSION }}
                 asset_content_type: application/octet-stream
             
-            - name: "Upload release"
+            - name: "Upload release Linux-arm64"
               uses: actions/upload-release-asset@v1
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
                 upload_url: ${{ steps.create_release.outputs.upload_url }}
-                asset_path: minecraft-rcon
+                asset_path: minecraft-rcon-linux-arm64-${{ env.RELEASE_VERSION }}
                 asset_name: minecraft-rcon-linux-arm64-${{ env.RELEASE_VERSION }}
                 asset_content_type: application/octet-stream
             
-            - name: "Upload release"
+            - name: "Upload release Windows-amd64"
               uses: actions/upload-release-asset@v1
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
                 upload_url: ${{ steps.create_release.outputs.upload_url }}
-                asset_path: minecraft-rcon
-                asset_name: minecraft-rcon-linux-amd64-${{ env.RELEASE_VERSION }}.exe
+                asset_path: minecraft-rcon-windows-amd64-${{ env.RELEASE_VERSION }}
+                asset_name: minecraft-rcon-windows-amd64-${{ env.RELEASE_VERSION }}.exe
                 asset_content_type: application/octet-stream
