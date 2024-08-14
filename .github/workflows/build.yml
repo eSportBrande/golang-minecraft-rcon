@@ -32,8 +32,8 @@ jobs:
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
-                tag_name: v1.0.0
-                release_name: Release v1.0.0
+                tag_name: v1.1.0
+                release_name: Release v1.1.0
                 body: |
                     This is the first release of my Go application.
                 draft: false
@@ -56,3 +56,33 @@ jobs:
               with:
                     name: myapp-windows-amd64
                     path: myapp-windows-amd64.exe
+            
+            - name: "Upload release"
+              uses: actions/upload-release-asset@v1
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                upload_url: ${{ steps.create_release.outputs.upload_url }}
+                asset_path: myapp-linux-amd64
+                asset_name: myapp-linux-amd64
+                asset_content_type: application/octet-stream
+            
+            - name: "Upload release"
+              uses: actions/upload-release-asset@v1
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                upload_url: ${{ steps.create_release.outputs.upload_url }}
+                asset_path: myapp-linux-arm64
+                asset_name: myapp-linux-arm64
+                asset_content_type: application/octet-stream
+            
+            - name: "Upload release"
+              uses: actions/upload-release-asset@v1
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                upload_url: ${{ steps.create_release.outputs.upload_url }}
+                asset_path: myapp-windows-amd64.exe
+                asset_name: myapp-windows-amd64.exe
+                asset_content_type: application/octet-stream
