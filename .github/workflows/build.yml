@@ -1,0 +1,58 @@
+name: Build Go Releases
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: "Set up Go"
+              uses: actions/setup-go@v2
+              with:
+                go-version: 1.17
+
+            - name: "Checkout code"
+              uses: actions/checkout@v2
+
+            - name: "Build Go for amd64 Linux"
+              run: GOOS=linux GOARCH=amd64 go build -o myapp-linux-amd64
+
+            - name: "Build Go for arm64 Linux"
+              run: GOOS=linux GOARCH=arm64 go build -o myapp-linux-arm64
+
+            - name: "Build Go for Windows x64"
+              run: GOOS=windows GOARCH=amd64 go build -o myapp-windows-amd64.exe
+
+            - name: "Create release"
+              id: create_release
+              uses: actions/create-release@v1
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                tag_name: v1.0.0
+                release_name: Release v1.0.0
+                body: |
+                    This is the first release of my Go application.
+                draft: false
+                prerelease: false
+
+            - name: "Upload amd64 Linux artifact"
+              uses: actions/upload-artifact@v2
+              with:
+                name: myapp-linux-amd64
+                path: myapp-linux-amd64
+
+            - name: "Upload arm64 Linux artifact"
+              uses: actions/upload-artifact@v2
+              with:
+                name: myapp-linux-arm64
+                path: myapp-linux-arm64
+
+            - name: "Upload Windows x64 artifact"
+              uses: actions/upload-artifact@v2
+              with:
+                    name: myapp-windows-amd64
+                    path: myapp-windows-amd64.exe
