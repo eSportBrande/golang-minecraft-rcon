@@ -46,20 +46,20 @@ jobs:
             - name: "Upload amd64 Linux artifact"
               uses: actions/upload-artifact@v2
               with:
-                name: minecraft-rcon
-                path: minecraft-rcon-linux-amd64-${{ env.RELEASE_VERSION }}
+                name: minecraft-rcon-linux-amd64-${{ env.RELEASE_VERSION }}
+                path: minecraft-rcon
 
             - name: "Upload arm64 Linux artifact"
               uses: actions/upload-artifact@v2
               with:
-                name: minecraft-rcon
-                path: minecraft-rcon-linux-arm64-${{ env.RELEASE_VERSION }}
+                name: minecraft-rcon-linux-arm64-${{ env.RELEASE_VERSION }}
+                path: minecraft-rcon
 
             - name: "Upload Windows x64 artifact"
               uses: actions/upload-artifact@v2
               with:
-                    name: minecraft-rcon
-                    path: minecraft-rcon-linux-amd64-${{ env.RELEASE_VERSION }}.exe
+                    name: minecraft-rcon-linux-amd64-${{ env.RELEASE_VERSION }}.exe
+                    path: minecraft-rcon
             
             - name: "Upload release"
               uses: actions/upload-release-asset@v1
